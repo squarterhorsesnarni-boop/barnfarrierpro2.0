@@ -6,7 +6,7 @@ import {
   calculateStatus,
   formatDate,
 } from './lib/dateUtils';
-import HorseForm from './components/horseform';
+import HorseForm from './components/horseform.jsx';
 import Toast from './components/Toast';
 import './index.css';
 
