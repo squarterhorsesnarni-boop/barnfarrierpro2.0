@@ -13,9 +13,12 @@ function HorseForm({
   onCancel,
   isOpen,
   onToggle,
+  saving = false,
 }) {
   const [formData, setFormData] = useState(initialForm);
-  const [saving, setSaving] = useState(false);
+  const [localSaving, setLocalSaving] = useState(false);
+
+  const isSaving = saving || localSaving;
 
   useEffect(() => {
     if (editingHorse) {
@@ -40,7 +43,7 @@ function HorseForm({
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setSaving(true);
+    setLocalSaving(true);
 
     try {
       await onSubmit({
@@ -53,7 +56,7 @@ function HorseForm({
         setFormData(initialForm);
       }
     } finally {
-      setSaving(false);
+      setLocalSaving(false);
     }
   }
 
@@ -125,8 +128,9 @@ function HorseForm({
         </div>
 
         <div className="form-actions">
-          <button type="submit" disabled={saving}>
-            {saving
+          <button type="submit" disabled={isSaving}>
+            {isSaving && <span className="spinner"></span>}
+            {isSaving
               ? 'Salvataggio...'
               : editingHorse
               ? 'Salva modifiche'
