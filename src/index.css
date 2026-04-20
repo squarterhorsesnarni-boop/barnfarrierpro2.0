@@ -23,6 +23,8 @@
   --danger-bg: #efd0c6;
   --danger-text: #8b2d21;
   --shadow: 0 12px 28px rgba(84, 52, 24, 0.12);
+  --filter-bg-start: #f5ead7;
+  --filter-bg-end: #ead7bd;
 }
 
 * {
@@ -40,7 +42,23 @@ body {
   color: var(--text);
   background:
     radial-gradient(circle at top, rgba(255, 245, 230, 0.75), transparent 35%),
-    linear-gradient(180deg, #f3e5d1 0%, #e7cfb0 100%);
+    linear-gradient(180deg, var(--filter-bg-start) 0%, var(--filter-bg-end) 100%);
+  transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.filter-ok {
+  --filter-bg-start: #eef6ed;
+  --filter-bg-end: #dce9db;
+}
+
+body.filter-in_scadenza {
+  --filter-bg-start: #fef6ec;
+  --filter-bg-end: #f5e5c5;
+}
+
+body.filter-scaduto {
+  --filter-bg-start: #f8ede7;
+  --filter-bg-end: #f1d9cc;
 }
 
 button,

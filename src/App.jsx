@@ -18,6 +18,7 @@ function App() {
   const [search, setSearch] = useState('');
   const [editingHorse, setEditingHorse] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
+  const [filterColor, setFilterColor] = useState('all');
   const [showArchived, setShowArchived] = useState(false);
   const [toast, setToast] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -31,6 +32,14 @@ function App() {
     const timer = setTimeout(() => setToast(null), 3000);
     return () => clearTimeout(timer);
   }, [toast]);
+
+  useEffect(() => {
+    const body = document.body;
+    body.classList.remove('filter-all', 'filter-ok', 'filter-in_scadenza', 'filter-scaduto');
+    if (filterColor !== 'all') {
+      body.classList.add(`filter-${filterColor}`);
+    }
+  }, [filterColor]);
 
   async function loadHorses() {
     setLoading(true);
@@ -290,7 +299,10 @@ function App() {
         <section className="summary-grid">
           <button
             className={`summary-card ${statusFilter === 'all' ? 'active' : ''}`}
-            onClick={() => setStatusFilter('all')}
+            onClick={() => {
+              setStatusFilter('all');
+              setFilterColor('all');
+            }}
           >
             <span className="summary-label">Totali</span>
             <strong>{stats.all}</strong>
@@ -298,7 +310,10 @@ function App() {
 
           <button
             className={`summary-card ok ${statusFilter === 'ok' ? 'active' : ''}`}
-            onClick={() => setStatusFilter('ok')}
+            onClick={() => {
+              setStatusFilter('ok');
+              setFilterColor('ok');
+            }}
           >
             <span className="summary-label">OK</span>
             <strong>{stats.ok}</strong>
@@ -308,7 +323,10 @@ function App() {
             className={`summary-card warning ${
               statusFilter === 'in_scadenza' ? 'active' : ''
             }`}
-            onClick={() => setStatusFilter('in_scadenza')}
+            onClick={() => {
+              setStatusFilter('in_scadenza');
+              setFilterColor('in_scadenza');
+            }}
           >
             <span className="summary-label">In scadenza</span>
             <strong>{stats.in_scadenza}</strong>
@@ -318,7 +336,10 @@ function App() {
             className={`summary-card danger ${
               statusFilter === 'scaduto' ? 'active' : ''
             }`}
-            onClick={() => setStatusFilter('scaduto')}
+            onClick={() => {
+              setStatusFilter('scaduto');
+              setFilterColor('scaduto');
+            }}
           >
             <span className="summary-label">Scaduti</span>
             <strong>{stats.scaduto}</strong>
@@ -344,6 +365,7 @@ function App() {
             onClick={() => {
               setShowArchived(false);
               setStatusFilter('all');
+              setFilterColor('all');
             }}
           >
             Attivi
@@ -402,25 +424,37 @@ function App() {
           <div className="filter-pills">
             <button
               className={statusFilter === 'all' ? 'active' : ''}
-              onClick={() => setStatusFilter('all')}
+              onClick={() => {
+                setStatusFilter('all');
+                setFilterColor('all');
+              }}
             >
               Tutti
             </button>
             <button
               className={statusFilter === 'ok' ? 'active' : ''}
-              onClick={() => setStatusFilter('ok')}
+              onClick={() => {
+                setStatusFilter('ok');
+                setFilterColor('ok');
+              }}
             >
               OK
             </button>
             <button
               className={statusFilter === 'in_scadenza' ? 'active' : ''}
-              onClick={() => setStatusFilter('in_scadenza')}
+              onClick={() => {
+                setStatusFilter('in_scadenza');
+                setFilterColor('in_scadenza');
+              }}
             >
               In scadenza
             </button>
             <button
               className={statusFilter === 'scaduto' ? 'active' : ''}
-              onClick={() => setStatusFilter('scaduto')}
+              onClick={() => {
+                setStatusFilter('scaduto');
+                setFilterColor('scaduto');
+              }}
             >
               Scaduti
             </button>
