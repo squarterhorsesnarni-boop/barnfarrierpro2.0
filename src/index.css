@@ -347,6 +347,7 @@ button:disabled {
   color: #4d331f;
 }
 
+.form-actions .danger,
 .card-actions .danger {
   background: #f1d2c7;
   color: #8b2d21;

@@ -148,6 +148,38 @@ function App() {
     await loadHorses();
   }
 
+  async function handleDeleteHorse(horseId) {
+    const confirmed = window.confirm(
+      'Sei sicuro? Questo cavallo verrà eliminato permanentemente dal database.'
+    );
+
+    if (!confirmed) return;
+
+    setSaving(true);
+    setError('');
+
+    const { error } = await supabase
+      .from('horses')
+      .delete()
+      .eq('id', horseId);
+
+    if (error) {
+      setError(error.message);
+      showToast('error', 'Eliminazione non riuscita', error.message);
+      setSaving(false);
+      return;
+    }
+
+    if (editingHorse?.id === horseId) {
+      setEditingHorse(null);
+      setIsFormOpen(false);
+    }
+
+    showToast('success', 'Cavallo eliminato');
+    setSaving(false);
+    await loadHorses();
+  }
+
   async function handleMarkShoedToday(horse) {
     const confirmed = window.confirm(
       `Segnare "${horse.name}" come ferrato oggi?`
@@ -354,6 +386,7 @@ function App() {
             setIsFormOpen((prev) => !prev);
           }}
           saving={saving}
+          onDelete={handleDeleteHorse}
         />
       )}
 

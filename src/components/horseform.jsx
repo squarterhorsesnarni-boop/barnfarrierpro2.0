@@ -14,6 +14,7 @@ function HorseForm({
   isOpen,
   onToggle,
   saving = false,
+  onDelete,
 }) {
   const [formData, setFormData] = useState(initialForm);
   const [localSaving, setLocalSaving] = useState(false);
@@ -138,15 +139,26 @@ function HorseForm({
           </button>
 
           {editingHorse && (
-            <button
-              type="button"
-              className="secondary"
-              onClick={() => {
-                onCancel();
-              }}
-            >
-              Annulla modifica
-            </button>
+            <>
+              <button
+                type="button"
+                className="secondary"
+                onClick={() => {
+                  onCancel();
+                }}
+              >
+                Annulla modifica
+              </button>
+
+              <button
+                type="button"
+                className="danger"
+                onClick={() => onDelete(editingHorse.id)}
+                disabled={isSaving}
+              >
+                Elimina cavallo
+              </button>
+            </>
           )}
         </div>
       </form>
